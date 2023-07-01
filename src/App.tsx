@@ -16,6 +16,7 @@ function App() {
     <>
       <Router>
         <Navbar />
+        <br/>
         <div className="container">
         <Routes>
           <Route path="/" Component={Home} />
