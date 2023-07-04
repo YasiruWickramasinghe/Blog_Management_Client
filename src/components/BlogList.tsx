@@ -1,63 +1,40 @@
-// import React, { useEffect, useState } from 'react';
-// import { getBlogs, createBlog } from '../service/blogAPI';
+import { useEffect, useState } from 'react';
+import { getBlogs } from '../service/blogAPI';
+import { Blog } from '../types/blogTypes';
 
-// interface Blog {
-//   id: string;
-//   name: string;
-//   author: string;
-//   // Add other properties as needed
-// }
-
-// const BlogList: React.FC = () => {
-//   const [blogs, setBlogs] = useState<Blog[]>([]);
-
-//   console.log('Blogs:', blogs);
-
-//   useEffect(() => {
-//     const fetchBlogs = async () => {
-//       try {
-//         const fetchedBlogs = await getBlogs();
-//         console.log('Fetched blogs:', fetchedBlogs);
-//         setBlogs(fetchedBlogs);
-//       } catch (error) {
-//         console.error('Error fetching blogs:', error);
-//       }
-//     };
-
-//     fetchBlogs();
-//   }, []);
-
-//   const handleCreateBlog = async () => {
-//     const newBlogData: Partial<Blog> = {
-//       name: 'New Blog',
-//       author: 'John Doe',
-//     };
-
-//     try {
-//       const createdBlog = await createBlog(newBlogData);
-//       setBlogs([...blogs, createdBlog]);
-//       console.log('Created blog:', createdBlog);
-//     } catch (error) {
-//       console.error('Error creating blog:', error);
-//     }
-//   };
-
-//   // console.log('Render blogs:', blogs.map);
+const BlogList: React.FC = () => {
+    const [blogs, setBlogs] = useState<Blog[]>([]);
   
+    useEffect(() => {
+      const fetchBlogs = async () => {
+        try {
+          const blogsData: Blog[] = await getBlogs();
 
-//   return (
-//     <div>
-//       <h2>Blog List</h2>
-//       {blogs.map((blog) => (
-//         <div key={blog.id}>
-//           <h3>{blog.name}</h3>
-//           <p>Author: {blog.author}</p>
-//           {/* Add other blog details */}
-//         </div>
-//       ))}
-//       <button onClick={handleCreateBlog}>Create Blog</button>
-//     </div>
-//   );
-// };
+          console.log('Fetched blogs:', blogsData);
 
-// export default BlogList;
+          setBlogs(blogsData);
+        } catch (error) {
+          console.error('Error fetching blogs:', error);
+        }
+      };
+  
+      fetchBlogs();
+    }, []);
+
+
+  return (
+    <>
+      <h2>Blog List</h2>
+      <ul>
+        {blogs.map((blog) => (
+          <li key={blog._id}>
+            <strong>{blog.name}</strong> by {blog.author}
+          </li>
+        ))}
+      </ul>
+      <button >Create Blog</button>
+    </>
+  );
+};
+
+export default BlogList;

@@ -11,7 +11,7 @@ function Blogs() {
                             <th scope="col">Name</th>
                             <th scope="col">Author</th>
                             <th scope="col">Publish</th>
-                            <th scope="col" colspan="3">Action</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
