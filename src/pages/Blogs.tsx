@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getBlogs } from '../service/blogAPI';
 import { Blog } from '../types/blogTypes';
-import Button from '../components/Button'
+import Button from '../components/Button';
+import Table from '../components/tableComponent/Table';
 
 const Blogs: React.FC = () => {
-
     const [blogs, setBlogs] = useState<Blog[]>([]);
 
     useEffect(() => {
@@ -12,7 +12,6 @@ const Blogs: React.FC = () => {
             try {
                 const response: Blog[] = await getBlogs();
                 setBlogs(response.data);
-
             } catch (error) {
                 console.error('Error fetching blogs:', error);
             }
@@ -20,44 +19,50 @@ const Blogs: React.FC = () => {
         fetchBlogs();
     }, []);
 
-    const handleClickShow = () => {
+    const columns = ['_id', 'name', 'author', 'Action'];
+
+    const handleShowClick = () => {
         console.log('Show Clicked!');
-      };
+    };
 
-      const handleClickUpdate = () => {
+    const handleUpdateClick = () => {
         console.log('Update Clicked!');
-      };
+    };
 
-      const handleClickDelete = () => {
+    const handleDeleteClick = () => {
         console.log('Delete Clicked!');
-      };
+    };
 
     return (
         <>
             <h1 className="text-center">BLOGS PAGE</h1>
             <br />
-            <table className="table">
-                <thead className="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Author</th>
-                        <th scope="col" colSpan={3}>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {blogs.map((blog, index) => (
-                        <tr key={blog._id}>
-                            <th>{index + 1}</th>
-                            <td>{blog.name}</td>
-                            <td>{blog.author}</td>
-                            <td><Button buttonStyle={'btn btn-outline-primary btn-sm'} onClick={handleClickShow}>SHOW</Button></td>
-                            <td><Button buttonStyle={'btn btn-outline-warning btn-sm'} onClick={handleClickUpdate}>UPDATE</Button></td>
-                            <td><Button buttonStyle={'btn btn-outline-danger btn-sm'} onClick={handleClickDelete}>DELETE</Button></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <Table
+                data={blogs}
+                columns={columns}
+                renderActionColumn={(row) => (
+                    <>
+                        <Button
+                            buttonStyle={'btn btn-outline-primary btn-sm'}
+                            onClick={handleShowClick}
+                        >
+                            SHOW
+                        </Button>
+                        <Button
+                            buttonStyle={'btn btn-outline-warning btn-sm'}
+                            onClick={handleUpdateClick}
+                        >
+                            UPDATE
+                        </Button>
+                        <Button
+                            buttonStyle={'btn btn-outline-danger btn-sm'}
+                            onClick={handleDeleteClick}
+                        >
+                            DELETE
+                        </Button>
+                    </>
+                )}
+            />
         </>
     );
 };
