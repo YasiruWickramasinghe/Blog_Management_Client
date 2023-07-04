@@ -3,24 +3,23 @@ import { getBlogs } from '../service/blogAPI';
 import { Blog } from '../types/blogTypes';
 
 const BlogList: React.FC = () => {
-    const [blogs, setBlogs] = useState<Blog[]>([]);
-  
-    useEffect(() => {
-      const fetchBlogs = async () => {
-        try {
-          const blogsData: Blog[] = await getBlogs();
+  const [blogs, setBlogs] = useState<Blog[]>([]);
 
-          console.log('Fetched blogs:', blogsData);
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response: Blog[] = await getBlogs();
 
-          setBlogs(blogsData);
-        } catch (error) {
-          console.error('Error fetching blogs:', error);
-        }
-      };
-  
-      fetchBlogs();
-    }, []);
+          console.log(response.data)
 
+        setBlogs(response.data);
+
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      }
+    };
+    fetchBlogs();
+  }, []);
 
   return (
     <>
@@ -32,7 +31,7 @@ const BlogList: React.FC = () => {
           </li>
         ))}
       </ul>
-      <button >Create Blog</button>
+      <button>Create Blog</button>
     </>
   );
 };
