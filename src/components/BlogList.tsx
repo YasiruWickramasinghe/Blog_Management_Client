@@ -9,9 +9,6 @@ const BlogList: React.FC = () => {
     const fetchBlogs = async () => {
       try {
         const response: Blog[] = await getBlogs();
-
-          console.log(response.data)
-
         setBlogs(response.data);
 
       } catch (error) {
