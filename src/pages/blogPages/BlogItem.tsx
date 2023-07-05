@@ -93,8 +93,8 @@ const BlogItem: React.FC = () => {
                         <Card header="BLOG DETAILS">
                             {blog ? (
                                 <>
-                                    <h2>{blog.name}</h2>
-                                    <p>{blog.author}</p>
+                                    <h2 className="text-center">{blog.name}</h2>
+                                    <p>Name: {blog.name}</p>
                                     <p>Author: {blog.author}</p>
                                 </>
                             ) : (

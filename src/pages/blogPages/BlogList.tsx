@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { getBlogs, deleteBlog } from '../../service/blogAPI';
+import { getBlogs, deleteBlog, searchBlogs } from '../../service/blogAPI';
 import { Blog } from '../../types/blogTypes';
 import Button from '../../components/Button';
 import Table from '../../components/tableComponent/Table';
@@ -10,35 +10,52 @@ import Swal from 'sweetalert2';
 const BlogList: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
 
-
     useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                const response: Blog[] = await getBlogs();
-                setBlogs(response.data);
-            } catch (error) {
-                console.error('Error fetching blogs:', error);
-            }
-        };
         fetchBlogs();
     }, []);
 
+    const fetchBlogs = async () => {
+        try {
+            const response: Blog[] = await getBlogs();
+            setBlogs(response.data);
+        } catch (error) {
+            console.error('Error fetching blogs:', error);
+        }
+    };
+
     const navigateTo = useNavigate();
 
-    const handleShowClick = (id: string) => {
-        // Redirect to the BlogItem page with the blog ID in the URL
-        navigateTo(`/blogitem/${id}`);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchClick = async (searchQuery: string) => {
+        try {
+            const response: Blog[] = await searchBlogs(searchQuery);
+            setBlogs(response);
+            setSearchQuery('');
+            if (response.length === 0) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Blogs Not Found!',
+                }).then(() => {
+                    fetchBlogs();
+                });
+            }
+        } catch (error) {
+            console.error('Error searching blogs:', error);
+        }
     };
 
 
+    const handleShowClick = (id: string) => {
+        navigateTo(`/blogitem/${id}`);
+    };
+
     const handleUpdateClick = (id: string) => {
-        // Redirect to the UpdateBlog page with the blog ID in the URL
         navigateTo(`/updateblog/${id}`);
     };
 
     const handleDeleteClick = async (id: string) => {
         try {
-            // Show SweetAlert confirmation dialog
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -49,7 +66,6 @@ const BlogList: React.FC = () => {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Delete the blog
                     handleDeleteConfirmation(id);
                 }
             });
@@ -59,33 +75,22 @@ const BlogList: React.FC = () => {
     };
 
     const handleDeleteConfirmation = (id: string) => {
-        // Perform the delete operation
         deleteBlog(id)
             .then(() => {
-                setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
-                // Show success message
+                setBlogs(prevBlogs => prevBlogs.filter(blog => blog._id !== id));
                 Swal.fire({
                     icon: 'success',
                     title: 'Deleted!',
-                    text: "Your blog has been deleted.",
+                    text: 'Your blog has been deleted.',
                     showConfirmButton: false,
                     timer: 1000,
-                  });
-
-                
+                });
             })
             .catch((error) => {
                 console.error('Error deleting blog:', error);
-                // Show error message
-                Swal.fire(
-                    'Error',
-                    'An error occurred while deleting the blog.',
-                    'error'
-                );
+                Swal.fire('Error', 'An error occurred while deleting the blog.', 'error');
             });
     };
-
-
 
     const bodyColumns = ['id', 'name', 'author', 'Action'];
     const headColumns = ['ID', 'NAME', 'AUTHOR', 'ACTION'];
@@ -97,7 +102,36 @@ const BlogList: React.FC = () => {
                     <Button buttonStyle={'btn btn-primary'}>NEW BLOG</Button>
                 </Link>
             </div>
-            <h1 className="text-center">BLOGS PAGE</h1>
+            <div className="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 className="text-center">BLOGS</h1>
+                </div>
+                <div>
+                    <form
+                        className="form-inline"
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                            e.preventDefault();
+                            const searchQuery = (e.currentTarget.elements.namedItem(
+                                'search'
+                            ) as HTMLInputElement).value;
+                            handleSearchClick(searchQuery);
+                        }}
+                    >
+                        <input
+                            className="form-control mr-sm-2"
+                            type="search"
+                            placeholder="SEARCH BLOG"
+                            name="search"
+                            aria-label="Search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <Button buttonStyle={'btn btn-success my-2 my-sm-4'} type="submit">
+                            SEARCH
+                        </Button>
+                    </form>
+                </div>
+            </div>
             <Table
                 data={blogs}
                 bodyColumns={bodyColumns}

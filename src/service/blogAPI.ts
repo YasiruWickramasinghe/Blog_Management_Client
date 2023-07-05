@@ -80,7 +80,7 @@ export const deleteBlog = async (id: string): Promise<void> => {
 
 export const searchBlogs = async (searchQuery: string): Promise<Blog[]> => {
     try {
-        const response: AxiosResponse<Blog[]> = await blogAPI.get('/blogs/search', {
+        const response: AxiosResponse<Blog[]> = await blogAPI.get('/blogs/search/name', {
             params: { searchQuery },
         });
         return response.data;
