@@ -18,7 +18,7 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <div className="container mt-3 mb-3" >
+        <div className="container mt-3 mb-5" >
           <Routes>
             <Route path="/" Component={Home} />
             <Route path="/bloglist" Component={BlogList} />

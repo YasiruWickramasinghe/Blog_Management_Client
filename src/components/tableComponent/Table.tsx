@@ -21,7 +21,7 @@ const Table: React.FC<TableProps> = ({ data, bodyColumns, headColumns, renderAct
   }
 
   return (
-    <table className="table">
+    <table className="table table-striped table-hover">
       <TableHeader columns={headColumns} />
       <TableBody data={data} columns={bodyColumns} renderActionColumn={renderActionColumn} />
     </table>

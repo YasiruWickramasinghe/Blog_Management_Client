@@ -34,58 +34,58 @@ const BlogItem: React.FC = () => {
 
     const handleDeleteClick = async (id: string) => {
         try {
-          // Show SweetAlert confirmation dialog
-          Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // Delete the blog
-              handleDeleteConfirmation(id);
-            }
-          });
+            // Show SweetAlert confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Delete the blog
+                    handleDeleteConfirmation(id);
+                }
+            });
         } catch (error) {
-          console.error('Error deleting blog:', error);
+            console.error('Error deleting blog:', error);
         }
-      };
-      
-      const handleDeleteConfirmation = (id: string) => {
+    };
+
+    const handleDeleteConfirmation = (id: string) => {
         // Perform the delete operation
         deleteBlog(id)
-          .then(() => {
-            navigateTo('/bloglist');
-            
-            // Show success message
-            Swal.fire({
-                icon: 'success',
-                title: 'Deleted!',
-                text: "Your blog has been deleted.",
-                showConfirmButton: false,
-                timer: 1000,
-              });
-          })
-          .catch((error) => {
-            console.error('Error deleting blog:', error);
-            // Show error message
-            Swal.fire(
-              'Error',
-              'An error occurred while deleting the blog.',
-              'error'
-            );
-          });
-      };
-      
-    
+            .then(() => {
+                navigateTo('/bloglist');
+
+                // Show success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: "Your blog has been deleted.",
+                    showConfirmButton: false,
+                    timer: 1000,
+                });
+            })
+            .catch((error) => {
+                console.error('Error deleting blog:', error);
+                // Show error message
+                Swal.fire(
+                    'Error',
+                    'An error occurred while deleting the blog.',
+                    'error'
+                );
+            });
+    };
+
+
 
     return (
         <>
             <div className="container">
-            <Link to="/bloglist">
+                <Link to="/bloglist">
                     <Button buttonStyle={'btn btn-outline-secondary btn-sm'}>Back</Button>
                 </Link>
                 <div className="row justify-content-center">

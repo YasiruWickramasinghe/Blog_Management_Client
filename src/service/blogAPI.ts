@@ -17,13 +17,13 @@ interface GetBlogsOptions {
 
 export const getBlogs = async ({
     page = 1,
-    limit = 10,
+    limit = 5,
     sort = {},
     filter = {},
     search = '',
-}: GetBlogsOptions = {}): Promise<Blog[]> => {
+}: GetBlogsOptions = {}): Promise<{ data: Blog[]; totalCount: number; currentPage: number; totalPages: number }> => {
     try {
-        const response: AxiosResponse<Blog[]> = await blogAPI.get('/blogs', {
+        const response: AxiosResponse<{ data: Blog[]; totalCount: number; currentPage: number; totalPages: number }> = await blogAPI.get('/blogs', {
             params: {
                 page,
                 limit,
@@ -38,6 +38,7 @@ export const getBlogs = async ({
         throw error;
     }
 };
+
 
 export const getBlogById = async (id: string): Promise<Blog> => {
     try {

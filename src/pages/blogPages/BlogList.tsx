@@ -9,15 +9,18 @@ import Swal from 'sweetalert2';
 
 const BlogList: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        fetchBlogs();
-    }, []);
+        fetchBlogs(currentPage);
+    }, [currentPage]);
 
-    const fetchBlogs = async () => {
+    const fetchBlogs = async (page: number) => {
         try {
-            const response: Blog[] = await getBlogs();
+            const response = await getBlogs({ page });
             setBlogs(response.data);
+            setTotalPages(response.totalPages);
         } catch (error) {
             console.error('Error fetching blogs:', error);
         }
@@ -37,14 +40,13 @@ const BlogList: React.FC = () => {
                     icon: 'info',
                     title: 'Blogs Not Found!',
                 }).then(() => {
-                    fetchBlogs();
+                    fetchBlogs(currentPage);
                 });
             }
         } catch (error) {
             console.error('Error searching blogs:', error);
         }
     };
-
 
     const handleShowClick = (id: string) => {
         navigateTo(`/blogitem/${id}`);
@@ -90,6 +92,14 @@ const BlogList: React.FC = () => {
                 console.error('Error deleting blog:', error);
                 Swal.fire('Error', 'An error occurred while deleting the blog.', 'error');
             });
+    };
+
+    const handlePreviousPage = () => {
+        setCurrentPage(currentPage => currentPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(currentPage => currentPage + 1);
     };
 
     const bodyColumns = ['id', 'name', 'author', 'Action'];
@@ -159,6 +169,18 @@ const BlogList: React.FC = () => {
                     </>
                 )}
             />
+            <div className="d-flex justify-content-center mt-3">
+                <nav>
+                    <ul className="pagination">
+                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                            <button className="page-link" onClick={handlePreviousPage}>Previous</button>
+                        </li>
+                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                            <button className="page-link" onClick={handleNextPage}>Next</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </>
     );
 };
