@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getBlogs } from '../service/blogAPI';
 import { Blog } from '../types/blogTypes';
 import Button from '../components/Button';
@@ -36,8 +37,13 @@ const Blogs: React.FC = () => {
 
     return (
         <>
+            <div className="d-flex justify-content-end">
+                <Link to="/newblog">
+                    <Button buttonStyle={'btn btn-primary'}
+                        onClick={handleDeleteClick}>NEW BLOG</Button>
+                </Link>
+            </div>
             <h1 className="text-center">BLOGS PAGE</h1>
-            <br />
             <Table
                 data={blogs}
                 bodyColumns={bodyColumns}

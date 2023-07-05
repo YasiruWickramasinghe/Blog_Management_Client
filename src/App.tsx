@@ -3,7 +3,7 @@ import Navbar from "./templates/Navbar"
 
 import Home from "./pages/Home"
 import About from "./pages/About"
-import Blogs from './pages/Blogs';
+import BlogList from './pages/BlogList';
 import NewBlog from './pages/NewBlog';
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
@@ -20,7 +20,7 @@ function App() {
         <div className="container">
         <Routes>
           <Route path="/" Component={Home} />
-          <Route path="/blogs" Component={Blogs} />
+          <Route path="/bloglist" Component={BlogList} />
           <Route path="/newblog" Component={NewBlog} />
           <Route path="/about" Component={About} />
           <Route path="/login" Component={Login} />
