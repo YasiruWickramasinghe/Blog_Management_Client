@@ -7,7 +7,7 @@ const NewBlog: React.FC = () => {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-lg-6">
-          <Card header={<h2>Create Blog</h2>}>
+          <Card header={<h2>CREATE BLOG</h2>}>
             <BlogForm />
           </Card>
         </div>

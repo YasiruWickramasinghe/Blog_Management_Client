@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getBlogById } from '../../service/blogAPI';
 import { Blog } from '../../types/blogTypes';
@@ -9,6 +10,7 @@ import { Link } from 'react-router-dom';
 const BlogItem: React.FC = () => {
     const { id } = useParams<{ id?: string }>();
     const [blog, setBlog] = useState<Blog | null>(null);
+    const navigateTo = useNavigate();
 
     useEffect(() => {
         const fetchBlog = async () => {
@@ -24,8 +26,9 @@ const BlogItem: React.FC = () => {
         fetchBlog();
     }, [id]);
 
-    const handleUpdateClick = () => {
-        console.log('Update Clicked!');
+    const handleUpdateClick = (id: string) => {
+        // Redirect to the UpdateBlog page with the blog ID in the URL
+        navigateTo(`/updateblog/${id}`);
     };
 
     const handleDeleteClick = () => {
@@ -54,7 +57,7 @@ const BlogItem: React.FC = () => {
                                 <div className="col-md-6">
                                     <Button
                                         buttonStyle={'btn btn-outline-warning btn-block'}
-                                        onClick={handleUpdateClick}
+                                        onClick={() => handleUpdateClick(id!)}
                                     >
                                         UPDATE
                                     </Button>

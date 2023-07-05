@@ -6,7 +6,7 @@ import { Blog } from '../../types/blogTypes';
 import Button from '../../components/Button';
 import Table from '../../components/tableComponent/Table';
 
-const Blogs: React.FC = () => {
+const BlogList: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     
 
@@ -22,9 +22,6 @@ const Blogs: React.FC = () => {
         fetchBlogs();
     }, []);
 
-    const bodyColumns = ['id', 'name', 'author', 'Action'];
-    const headColumns = ['ID', 'NAME', 'AUTHOR', 'ACTION'];
-
     const navigateTo = useNavigate();
 
     const handleShowClick = (id: string) => {
@@ -33,13 +30,17 @@ const Blogs: React.FC = () => {
       };
       
 
-    const handleUpdateClick = () => {
-        console.log('Update Clicked!');
+    const handleUpdateClick = (id: string) => {
+        // Redirect to the UpdateBlog page with the blog ID in the URL
+        navigateTo(`/updateblog/${id}`);
     };
 
     const handleDeleteClick = () => {
         console.log('Delete Clicked!');
     };
+
+    const bodyColumns = ['id', 'name', 'author', 'Action'];
+    const headColumns = ['ID', 'NAME', 'AUTHOR', 'ACTION'];
 
     return (
         <>
@@ -63,7 +64,7 @@ const Blogs: React.FC = () => {
                         </Button>
                         <Button
                             buttonStyle={'btn btn-outline-warning btn-sm'}
-                            onClick={handleUpdateClick}
+                            onClick={() => handleUpdateClick(_row._id)}
                         >
                             UPDATE
                         </Button>
@@ -80,4 +81,4 @@ const Blogs: React.FC = () => {
     );
 };
 
-export default Blogs;
+export default BlogList;
