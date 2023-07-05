@@ -20,6 +20,8 @@ const TableBody: React.FC<TableBodyProps> = ({ data, columns, renderActionColumn
                   </div>
                 </td>
               );
+            } else if (column === 'id') {
+              return <td key={columnIndex}>{rowIndex + 1}</td>; 
             } else {
               return <td key={columnIndex}>{row[column]}</td>;
             }

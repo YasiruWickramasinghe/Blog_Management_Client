@@ -4,11 +4,12 @@ import TableBody from './TableBody';
 
 interface TableProps {
   data: any[];
-  columns: string[];
+  bodyColumns: string[];
+  headColumns : string[];
   renderActionColumn: (row: any) => React.ReactNode;
 }
 
-const Table: React.FC<TableProps> = ({ data, columns, renderActionColumn }) => {
+const Table: React.FC<TableProps> = ({ data, bodyColumns, headColumns, renderActionColumn }) => {
   if (!Array.isArray(data) || data.length === 0) {
     return (
       <div className="d-flex justify-content-center align-items-center">
@@ -21,8 +22,8 @@ const Table: React.FC<TableProps> = ({ data, columns, renderActionColumn }) => {
 
   return (
     <table className="table">
-      <TableHeader columns={columns} />
-      <TableBody data={data} columns={columns} renderActionColumn={renderActionColumn} />
+      <TableHeader columns={headColumns} />
+      <TableBody data={data} columns={bodyColumns} renderActionColumn={renderActionColumn} />
     </table>
   );
 };

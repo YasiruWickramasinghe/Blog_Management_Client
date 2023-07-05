@@ -19,7 +19,8 @@ const Blogs: React.FC = () => {
         fetchBlogs();
     }, []);
 
-    const columns = ['_id', 'name', 'author', 'Action'];
+    const bodyColumns = ['id', 'name', 'author', 'Action'];
+    const headColumns = ['ID', 'NAME', 'AUTHOR', 'ACTION'];
 
     const handleShowClick = () => {
         console.log('Show Clicked!');
@@ -39,8 +40,9 @@ const Blogs: React.FC = () => {
             <br />
             <Table
                 data={blogs}
-                columns={columns}
-                renderActionColumn={(row) => (
+                bodyColumns={bodyColumns}
+                headColumns={headColumns}
+                renderActionColumn={(_row) => (
                     <>
                         <Button
                             buttonStyle={'btn btn-outline-primary btn-sm'}

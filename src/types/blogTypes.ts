@@ -12,3 +12,5 @@ export interface BlogPaginatedResponse {
     currentPage: number;
     totalPages: number;
 }
+
+
