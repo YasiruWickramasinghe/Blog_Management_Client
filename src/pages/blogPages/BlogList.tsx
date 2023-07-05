@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getBlogs } from '../service/blogAPI';
-import { Blog } from '../types/blogTypes';
-import Button from '../components/Button';
-import Table from '../components/tableComponent/Table';
+import { useNavigate } from 'react-router-dom';
+import { getBlogs } from '../../service/blogAPI';
+import { Blog } from '../../types/blogTypes';
+import Button from '../../components/Button';
+import Table from '../../components/tableComponent/Table';
 
 const Blogs: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
+    
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -23,9 +25,13 @@ const Blogs: React.FC = () => {
     const bodyColumns = ['id', 'name', 'author', 'Action'];
     const headColumns = ['ID', 'NAME', 'AUTHOR', 'ACTION'];
 
-    const handleShowClick = () => {
-        console.log('Show Clicked!');
-    };
+    const navigateTo = useNavigate();
+
+    const handleShowClick = (id: string) => {
+        // Redirect to the BlogItem page with the blog ID in the URL
+        navigateTo(`/blogitem/${id}`);
+      };
+      
 
     const handleUpdateClick = () => {
         console.log('Update Clicked!');
@@ -39,8 +45,7 @@ const Blogs: React.FC = () => {
         <>
             <div className="d-flex justify-content-end">
                 <Link to="/newblog">
-                    <Button buttonStyle={'btn btn-primary'}
-                        onClick={handleDeleteClick}>NEW BLOG</Button>
+                    <Button buttonStyle={'btn btn-primary'}>NEW BLOG</Button>
                 </Link>
             </div>
             <h1 className="text-center">BLOGS PAGE</h1>
@@ -52,7 +57,7 @@ const Blogs: React.FC = () => {
                     <>
                         <Button
                             buttonStyle={'btn btn-outline-primary btn-sm'}
-                            onClick={handleShowClick}
+                            onClick={() => handleShowClick(_row._id)}
                         >
                             SHOW
                         </Button>

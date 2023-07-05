@@ -1,6 +1,6 @@
 import React from 'react';
-import BlogForm from '../components/formComponent/BlogForm';
-import Card from '../components/Card';
+import BlogForm from '../../components/blogComponents/BlogForm';
+import Card from '../../components/Card';
 
 const NewBlog: React.FC = () => {
   return (

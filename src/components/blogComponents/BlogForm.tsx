@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import FormField from './FormField';
+import FormField from '../formComponent/FormField';
 import Button from '../Button';
 import Swal from 'sweetalert2';
 import { createBlog } from '../../service/blogAPI';
@@ -62,13 +62,13 @@ const BlogForm: React.FC = () => {
                 error={errors.author}
             />
 
-            <div className="d-flex justify-content-center mt-5"> {/* Add a margin top */}
+            <div className="d-flex justify-content-center mt-5">
                 <Button onClick={handleSubmit(onSubmit)} buttonStyle="btn btn-primary btn-block">
                     SUBMIT
                 </Button>
             </div>
 
-            {submissionCompleted && <p className="text-success mt-2">Submission completed!</p>}
+            {submissionCompleted}
         </form>
     );
 };

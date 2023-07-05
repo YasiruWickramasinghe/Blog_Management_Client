@@ -3,10 +3,11 @@ import Navbar from "./templates/Navbar"
 
 import Home from "./pages/Home"
 import About from "./pages/About"
-import BlogList from './pages/BlogList';
-import NewBlog from './pages/NewBlog';
+import BlogList from './pages/blogPages/BlogList';
+import NewBlog from './pages/blogPages/NewBlog';
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+import BlogItem from './pages/blogPages/BlogItem';
 
 import Footer from './templates/Footer';
 
@@ -16,18 +17,18 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <br/>
-        <div className="container">
-        <Routes>
-          <Route path="/" Component={Home} />
-          <Route path="/bloglist" Component={BlogList} />
-          <Route path="/newblog" Component={NewBlog} />
-          <Route path="/about" Component={About} />
-          <Route path="/login" Component={Login} />
-          <Route path="/signup" Component={Signup} />
-        </Routes>
+        <div className="container mt-3 mb-3" >
+          <Routes>
+            <Route path="/" Component={Home} />
+            <Route path="/bloglist" Component={BlogList} />
+            <Route path="/newblog" Component={NewBlog} />
+            <Route path="/blogitem/:id" Component={BlogItem} />
+            <Route path="/about" Component={About} />
+            <Route path="/login" Component={Login} />
+            <Route path="/signup" Component={Signup} />
+          </Routes>
         </div>
-        <Footer/>
+        <Footer />
       </Router>
     </>
   )
