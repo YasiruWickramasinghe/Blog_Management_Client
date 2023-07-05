@@ -32,10 +32,12 @@ const BlogForm: React.FC<BlogFormProps> = ({ isUpdateForm = false, initialData }
         // Show update completed message
         Swal.fire({
           icon: 'success',
-          title: 'Blog Updated Successfully',
+          title: 'Updated!',
+          text: "Your blog has been updated.",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1000,
         });
+
       } else {
         // Create the blog
         await createBlog(data);
@@ -43,9 +45,10 @@ const BlogForm: React.FC<BlogFormProps> = ({ isUpdateForm = false, initialData }
         // Show creation completed message
         Swal.fire({
           icon: 'success',
-          title: 'Blog Created Successfully',
+          title: 'Created!',
+          text: "Your blog has been created.",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1000,
         });
       }
 
