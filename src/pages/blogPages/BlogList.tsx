@@ -5,6 +5,7 @@ import { getBlogs, deleteBlog, searchBlogs } from '../../service/blogAPI';
 import { Blog } from '../../types/blogTypes';
 import Button from '../../components/Button';
 import Table from '../../components/tableComponent/Table';
+import TablePagination from '../../components/tableComponent/TablePagination';
 import Swal from 'sweetalert2';
 
 const BlogList: React.FC = () => {
@@ -94,13 +95,9 @@ const BlogList: React.FC = () => {
             });
     };
 
-    const handlePreviousPage = () => {
-        setCurrentPage(currentPage => currentPage - 1);
-    };
-
-    const handleNextPage = () => {
-        setCurrentPage(currentPage => currentPage + 1);
-    };
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+      };
 
     const bodyColumns = ['id', 'name', 'author', 'Action'];
     const headColumns = ['ID', 'NAME', 'AUTHOR', 'ACTION'];
@@ -169,18 +166,11 @@ const BlogList: React.FC = () => {
                     </>
                 )}
             />
-            <div className="d-flex justify-content-center mt-3">
-                <nav>
-                    <ul className="pagination">
-                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                            <button className="page-link" onClick={handlePreviousPage}>Previous</button>
-                        </li>
-                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                            <button className="page-link" onClick={handleNextPage}>Next</button>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <TablePagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
         </>
     );
 };

@@ -31,7 +31,7 @@ const UpdateBlog: React.FC = () => {
 
   return (
     <div className="container">
-            <Link to="/bloglist">
+      <Link to="/bloglist">
         <Button buttonStyle={'btn btn-outline-secondary btn-sm mb-3'}>Back</Button>
       </Link>
       <div className="row justify-content-center">
