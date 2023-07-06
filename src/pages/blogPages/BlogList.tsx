@@ -12,7 +12,11 @@ const BlogList: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(1);
 
+    const navigateTo = useNavigate();
+
+    //Retreve data Function
     useEffect(() => {
         fetchBlogs(currentPage);
     }, [currentPage]);
@@ -22,15 +26,15 @@ const BlogList: React.FC = () => {
             const response = await getBlogs({ page });
             setBlogs(response.data);
             setTotalPages(response.totalPages);
+            setRowsPerPage(response.limit);
         } catch (error) {
             console.error('Error fetching blogs:', error);
         }
     };
 
-    const navigateTo = useNavigate();
-
     const [searchQuery, setSearchQuery] = useState('');
 
+    //Search Function
     const handleSearchClick = async (searchQuery: string) => {
         try {
             const response: Blog[] = await searchBlogs(searchQuery);
@@ -49,14 +53,17 @@ const BlogList: React.FC = () => {
         }
     };
 
+    //Show Function
     const handleShowClick = (id: string) => {
         navigateTo(`/blogitem/${id}`);
     };
 
+    //Update Function
     const handleUpdateClick = (id: string) => {
         navigateTo(`/updateblog/${id}`);
     };
 
+    //Delete Function
     const handleDeleteClick = async (id: string) => {
         try {
             Swal.fire({
@@ -77,27 +84,36 @@ const BlogList: React.FC = () => {
         }
     };
 
-    const handleDeleteConfirmation = (id: string) => {
-        deleteBlog(id)
-            .then(() => {
-                setBlogs(prevBlogs => prevBlogs.filter(blog => blog._id !== id));
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Deleted!',
-                    text: 'Your blog has been deleted.',
-                    showConfirmButton: false,
-                    timer: 1000,
-                });
-            })
-            .catch((error) => {
-                console.error('Error deleting blog:', error);
-                Swal.fire('Error', 'An error occurred while deleting the blog.', 'error');
-            });
-    };
+    const handleDeleteConfirmation = async (id: string) => {
+        try {
+          await deleteBlog(id);
+          const updatedBlogs = blogs.filter(blog => blog._id !== id);
+          setBlogs(updatedBlogs);
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'Your blog has been deleted.',
+            showConfirmButton: false,
+            timer: 1000,
+          });
+      
+          // Check if the current page's blogs are empty
+          if (updatedBlogs.length === 0 && currentPage > 1) {
+            const previousPage = currentPage - 1;
+            fetchBlogs(previousPage);
+          }
+        } catch (error) {
+          console.error('Error deleting blog:', error);
+          Swal.fire('Error', 'An error occurred while deleting the blog.', 'error');
+        }
+      };
+      
 
+      
+    //Pagination
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
-      };
+    };
 
     const bodyColumns = ['id', 'name', 'author', 'Action'];
     const headColumns = ['ID', 'NAME', 'AUTHOR', 'ACTION'];
@@ -143,6 +159,8 @@ const BlogList: React.FC = () => {
                 data={blogs}
                 bodyColumns={bodyColumns}
                 headColumns={headColumns}
+                currentPage={currentPage}
+                rowsPerPage={rowsPerPage}
                 renderActionColumn={(_row) => (
                     <>
                         <Button

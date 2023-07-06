@@ -21,7 +21,7 @@ export const getBlogs = async ({
     sort = {},
     filter = {},
     search = '',
-}: GetBlogsOptions = {}): Promise<{ data: Blog[]; totalCount: number; currentPage: number; totalPages: number }> => {
+}: GetBlogsOptions = {}): Promise<{ data: Blog[]; totalCount: number; currentPage: number; totalPages: number, limit: number; }> => {
     try {
         const response: AxiosResponse<{ data: Blog[]; totalCount: number; currentPage: number; totalPages: number }> = await blogAPI.get('/blogs', {
             params: {
@@ -32,7 +32,7 @@ export const getBlogs = async ({
                 search,
             },
         });
-        return response.data;
+        return {...response.data, limit,};
     } catch (error: any) {
         handleRequestError(error);
         throw error;
