@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import FormField from '../formComponent/FormField';
+import FormField from '../formComponents/FormField';
 import Button from '../Button';
 import Swal from 'sweetalert2';
 import { createBlog, updateBlog } from '../../service/blogAPI';

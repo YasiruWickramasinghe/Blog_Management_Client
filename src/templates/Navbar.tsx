@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Navbar() {
 
@@ -16,7 +16,10 @@ function Navbar() {
                             <NavLink className="nav-link" to="/" >HOME</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/bloglist" >BLOGS</NavLink>
+                            <NavLink className="nav-link" to="/blogstableview" >TABLE VIEW</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/blogscardview" >CARD VIEW</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/newblog" >NEW BLOG</NavLink>

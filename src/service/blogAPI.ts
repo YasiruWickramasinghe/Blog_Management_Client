@@ -17,7 +17,7 @@ interface GetBlogsOptions {
 
 export const getBlogs = async ({
     page = 1,
-    limit = 5,
+    limit = 6,
     sort = {},
     filter = {},
     search = '',

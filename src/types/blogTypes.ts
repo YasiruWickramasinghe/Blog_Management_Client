@@ -1,5 +1,5 @@
 export interface Blog {
-    _id: string | number;
+    _id: string;
     name: string;
     author: string;
     createdAt: string;
