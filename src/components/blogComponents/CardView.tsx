@@ -10,6 +10,15 @@ interface CardViewProps {
 }
 
 const CardView: React.FC<CardViewProps> = ({ blogs, onDelete, onShow, onUpdate }) => {
+  if (!Array.isArray(blogs) || blogs.length === 0) {
+    return (
+      <div className="d-flex justify-content-center align-items-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">No Blogs</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="row">

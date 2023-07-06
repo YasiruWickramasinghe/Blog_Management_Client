@@ -88,7 +88,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ isUpdateForm = false, initialData }
       />
 
       <div className="d-flex justify-content-center mt-5">
-        <Button onClick={handleSubmit(onSubmit)} buttonStyle={`btn btn-${isUpdateForm ? 'warning' : 'success'} btn-block`}>
+        <Button onClick={handleSubmit(onSubmit)} buttonStyle={`btn btn-outline-${isUpdateForm ? 'warning' : 'success'} btn-block`}>
           {isUpdateForm ? 'UPDATE' : 'CREATE'}
         </Button>
       </div>

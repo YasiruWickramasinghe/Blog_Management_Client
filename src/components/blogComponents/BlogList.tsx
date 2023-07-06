@@ -117,6 +117,7 @@ const BlogList: React.FC<BlogListProps> = ({ viewType }) => {
   };
 
   const renderView = () => {
+
     if (viewType === 'table') {
       return (
         <TableView
