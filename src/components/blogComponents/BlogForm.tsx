@@ -61,7 +61,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ isUpdateForm = false, initialData }
       // Reset message after 2 seconds
       setTimeout(() => {
         setSubmissionCompleted(false);
-        navigateTo('/bloglist');
+        navigateTo('/blogstableview');
       }, 2000);
     } catch (error) {
       console.error('Error creating/updating blog:', error);

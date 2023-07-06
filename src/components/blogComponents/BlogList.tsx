@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { getBlogs, deleteBlog, searchBlogs } from '../../service/blogAPI';
 import { Blog } from '../../types/blogTypes';
-import Button from '../../components/Button';
-import CardView from '../../components/blogComponents/CardView';
-import TableView from '../../components/blogComponents/TableView';
-import TablePagination from '../../components/tableComponents/TablePagination';
-import Search from '../../components/Search';
+import Button from '../Button';
+import CardView from './CardView';
+import TableView from './TableView';
+import TablePagination from '../tableComponents/TablePagination';
+import Search from '../Search';
 import Swal from 'sweetalert2';
 
 interface BlogListProps {

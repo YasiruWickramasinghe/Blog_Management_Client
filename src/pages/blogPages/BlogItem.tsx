@@ -58,7 +58,7 @@ const BlogItem: React.FC = () => {
         // Perform the delete operation
         deleteBlog(id)
             .then(() => {
-                navigateTo('/bloglist');
+                navigateTo('/blogstableview');
 
                 // Show success message
                 Swal.fire({
@@ -85,7 +85,7 @@ const BlogItem: React.FC = () => {
     return (
         <>
             <div className="container">
-                <Link to="/bloglist">
+                <Link to="/blogstableview">
                     <Button buttonStyle={'btn btn-outline-secondary btn-sm'}>Back</Button>
                 </Link>
                 <div className="row justify-content-center">

@@ -1,4 +1,4 @@
-import BlogList from "../blogPages/BlogList";
+import BlogList from "../../components/blogComponents/BlogList";
 
 function BlogsCardView() {
     return (

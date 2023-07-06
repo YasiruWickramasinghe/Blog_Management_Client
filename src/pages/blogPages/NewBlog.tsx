@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const NewBlog: React.FC = () => {
   return (
     <div className="container">
-      <Link to="/bloglist">
+      <Link to="/blogstableview">
         <Button buttonStyle={'btn btn-outline-secondary btn-sm mb-3'}>Back</Button>
       </Link>
       <div className="row justify-content-center">
