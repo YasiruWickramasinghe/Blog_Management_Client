@@ -6,7 +6,9 @@ import { Blog } from '../../types/blogTypes';
 import Button from '../../components/Button';
 import Table from '../../components/tableComponent/Table';
 import TablePagination from '../../components/tableComponent/TablePagination';
+import Search from '../../components/Search';
 import Swal from 'sweetalert2';
+
 
 const BlogList: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -32,14 +34,11 @@ const BlogList: React.FC = () => {
         }
     };
 
-    const [searchQuery, setSearchQuery] = useState('');
-
     //Search Function
     const handleSearchClick = async (searchQuery: string) => {
         try {
             const response: Blog[] = await searchBlogs(searchQuery);
             setBlogs(response);
-            setSearchQuery('');
             if (response.length === 0) {
                 Swal.fire({
                     icon: 'info',
@@ -86,30 +85,30 @@ const BlogList: React.FC = () => {
 
     const handleDeleteConfirmation = async (id: string) => {
         try {
-          await deleteBlog(id);
-          const updatedBlogs = blogs.filter(blog => blog._id !== id);
-          setBlogs(updatedBlogs);
-          Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: 'Your blog has been deleted.',
-            showConfirmButton: false,
-            timer: 1000,
-          });
-      
-          // Check if the current page's blogs are empty
-          if (updatedBlogs.length === 0 && currentPage > 1) {
-            const previousPage = currentPage - 1;
-            fetchBlogs(previousPage);
-          }
-        } catch (error) {
-          console.error('Error deleting blog:', error);
-          Swal.fire('Error', 'An error occurred while deleting the blog.', 'error');
-        }
-      };
-      
+            await deleteBlog(id);
+            const updatedBlogs = blogs.filter(blog => blog._id !== id);
+            setBlogs(updatedBlogs);
+            Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Your blog has been deleted.',
+                showConfirmButton: false,
+                timer: 1000,
+            });
 
-      
+            // Check if the current page's blogs are empty
+            if (updatedBlogs.length === 0 && currentPage > 1) {
+                const previousPage = currentPage - 1;
+                fetchBlogs(previousPage);
+            }
+        } catch (error) {
+            console.error('Error deleting blog:', error);
+            Swal.fire('Error', 'An error occurred while deleting the blog.', 'error');
+        }
+    };
+
+
+
     //Pagination
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -130,29 +129,7 @@ const BlogList: React.FC = () => {
                     <h1 className="text-center">BLOGS</h1>
                 </div>
                 <div>
-                    <form
-                        className="form-inline"
-                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                            e.preventDefault();
-                            const searchQuery = (e.currentTarget.elements.namedItem(
-                                'search'
-                            ) as HTMLInputElement).value;
-                            handleSearchClick(searchQuery);
-                        }}
-                    >
-                        <input
-                            className="form-control mr-sm-2"
-                            type="search"
-                            placeholder="SEARCH BLOG"
-                            name="search"
-                            aria-label="Search"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                        <Button buttonStyle={'btn btn-success my-2 my-sm-4'} type="submit">
-                            SEARCH
-                        </Button>
-                    </form>
+                    <Search onSearch={handleSearchClick} />
                 </div>
             </div>
             <Table
